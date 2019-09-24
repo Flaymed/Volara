@@ -6,7 +6,7 @@ let db = new sqlite3.Database('./kingdombot/database/main.db');
 require('events').EventEmitter.defaultMaxListeners = 0;
 
 app.get('/', function(req, res) {
-  res.sendFile(__dirname + './public/index.html');
+  res.sendFile(__dirname + '/public/index.html');
 })
 
 app.listen(8000);
