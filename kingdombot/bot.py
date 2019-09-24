@@ -72,7 +72,7 @@ async def mine(ctx):
         time.sleep(4)
         dbmanager.addGold(id, gold)
         await ctx.send('Your miners found {} pieces of gold!'.format(gold))
-    else:   
+    else:
         await ctx.send('You must own a kingdom before you can go mining!')
 
 #stop command

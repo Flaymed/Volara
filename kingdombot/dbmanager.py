@@ -80,11 +80,9 @@ def mine():
     return gold
 
 def addGold(id, gold):
-    ownerid = (int(id),)
+    ownerid = (id,)
     c.execute("SELECT gold FROM kingdoms WHERE ownerid=?", ownerid)
     currentgold = c.fetchone()
     addedgold = gold
-    print(currentgold)
-    print(addedgold)
-    newgold = currentgold + addedgold
-    c.execute("UPDATE kingdoms SET gold=? WHERE ownerid=?", [int(newgold), ownerid])
+    newgold = int(currentgold[0]) + addedgold
+    c.execute("UPDATE kingdoms SET gold=%3d WHERE ownerid=?" % newgold, ownerid)
