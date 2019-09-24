@@ -1,0 +1,30 @@
+{
+  "name": "volara",
+  "version": "1.0.0",
+  "description": "Website for Kingdom Bot",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Flaymed/Volara.git"
+  },
+  "keywords": [
+    "kingdoms",
+    "clans",
+    "Flaymed"
+  ],
+  "author": "Mark Viggiano",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Flaymed/Volara/issues"
+  },
+  "homepage": "https://github.com/Flaymed/Volara#readme",
+  "dependencies": {
+    "ejs": "^2.7.1",
+    "express": "^4.17.1",
+    "sqlite3": "^4.1.0"
+  }
+}
