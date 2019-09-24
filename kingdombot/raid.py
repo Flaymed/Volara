@@ -62,3 +62,48 @@ def raid(name, clan):
 
         #Commit changes to db
         conn.commit()
+
+        return "{}\'s clan has defeated: {}".format(name, clan)
+
+    elif clanOneAttack == clanTwoDefense:
+
+        #clan 2
+        clanTwoDefense = clanTwoDefense + 5
+        clanTwoVision = clanTwoVision + 5
+
+        c.execute("UPDATE kingdoms SET defense=?, vision=? WHERE name=?", [clanTwoDefense, clanTwoVision, clanname])
+
+        #clan 1
+        clanOneAttack = clanOneAttack - 5
+        clanOneGold = clanOneGold - 15 #looses 15 gold for battle reperations. (Winning gold pays for this therefor it is not factored in)
+
+        c.execute("UPDATE kingdoms SET attack=?, gold=? WHERE owner=?", [clanOneAttack, clanOneGold, oname])
+
+        #Commit db changes
+        conn.commit()
+
+        return "draw"
+
+    elif clanOneAttack < clanTwoDefense:
+
+        #clan 2
+        clanTwoDefense = clanTwoDefense + 10
+        clanTwoVision = clanTwoVision + 5
+        clanTwoGold = clanTwoGold + 15
+
+        c.execute("UPDATE kingdoms SET defense=?, vision=?, gold=? WHERE name=?", [clanTwoDefense, clanTwoVision, clanTwoGold, clanname])
+
+        #clan 1
+        clanOneAttack = clanOneAttack - 10
+        clanOneVision = clanOneVision - 5
+        clanOneGold = clanOneGold - 15
+
+        c.execute("UPDATE kingdoms SET attack=?, vision=?, gold=? WHERE owner=?", [clanOneAttack, clanOneVision, clanOneGold, oname])
+
+        conn.commit()
+
+        return "{} has sucessfully defended against {}\'s raid!".format(clan, name)
+
+    else:
+
+        return "Something has happened here and I don\'t know what... ask Flaymed to look at the console... cause idk"

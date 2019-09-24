@@ -75,6 +75,20 @@ async def mine(ctx):
     else:
         await ctx.send('You must own a kingdom before you can go mining!')
 
+@bot.command()
+@commands.cooldown(1, 90, commands.BucketType.user)
+async def raid(ctx, clantoraid = None):
+    id = ctx.author.id
+    if clantoraid:
+        if dbmanager.checkExist(clantoraid):
+            if dbmanager.checkOwner(id):
+                await ctx.send(raid.startRaid(id, clantoraid))
+            else:
+                await ctx.send('You must own a kingdom to raid another kingdom!')
+        else:
+            await ctx.send('It appears the kingdom you are trying to raid does not exist!')
+    else:
+        await ctx.send('Please supply a kingdom you wish to raid!')
 #stop command
 @bot.command()
 async def stop(ctx):
