@@ -93,7 +93,11 @@ async def raid(ctx, clantoraid = None):
     if clantoraid:
         if dbmanager.checkExist(clantoraid):
             if dbmanager.checkOwner(id):
-                await ctx.send(raid.startRaid(id, clantoraid))
+                if ally.checkAlly(id, clantoraid):
+                    await ctx.message.guild.get_member(dbmanager.getKingdomOwnerId(clantoraid)).send(message)
+                    await ctx.send('You cannot raid an ally! I have notified your ally that you tried to raid them!')
+                else:
+                    await ctx.send(raid.startRaid(id, clantoraid))
             else:
                 await ctx.send('You must own a kingdom to raid another kingdom!')
         else:

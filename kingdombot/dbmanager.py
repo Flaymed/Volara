@@ -86,3 +86,9 @@ def addGold(id, gold):
     addedgold = gold
     newgold = int(currentgold[0]) + addedgold
     c.execute("UPDATE kingdoms SET gold=%3d WHERE ownerid=?" % newgold, ownerid)
+
+def getKingdomOwnerId(clanname):
+    clan = (clanname,)
+    c.execute("SELECT ownerid FROM kingdoms WHERE name=?", clan)
+    result = c.fetchone()
+    return result[0]
