@@ -4,7 +4,7 @@ conn = sqlite3.connect('./database/main.db')
 c = conn.cursor()
 
 def onReady():
-    c.execute("CREATE TABLE IF NOT EXISTS kingdoms(owner VARCHER, ownerid INT, name VARHCAR, rank INT, attack INT, defense INT, vision INT, gold INT, population INT)")
+    c.execute("CREATE TABLE IF NOT EXISTS kingdoms(owner VARCHER, ownerid INT, name VARHCAR, rank INT, attack INT, defense INT, vision INT, gold INT, population INT, ally VARCHAR, request VARCHAR)")
     conn.commit()
 
 def wipeDB():
@@ -33,7 +33,7 @@ def createKingdom(name, owner, ownerid):
     Kname = (str(name),)
     Kowner = (str(owner),)
     Kownerid = (int(ownerid),)
-    c.execute("INSERT INTO kingdoms (owner, ownerid, name, rank, attack, defense, vision, gold, population) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", [owner, ownerid, name, 0, 10, 10, 20, 100, 450])
+    c.execute("INSERT INTO kingdoms (owner, ownerid, name, rank, attack, defense, vision, gold, population, ally, request) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", [owner, ownerid, name, 0, 10, 10, 20, 100, 450, None, None])
     conn.commit()
 
 def ownsKingdom(id):

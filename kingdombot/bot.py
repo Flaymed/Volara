@@ -1,5 +1,7 @@
 #import modules
 import dbmanager
+import ally
+import raid
 import time
 import sqlite3
 import discord
@@ -9,6 +11,8 @@ conn = sqlite3.connect('./database/main.db')
 c = conn.cursor()
 
 bot = commands.Bot(command_prefix='!', description='A bot that does some cool stuff!')
+
+#event handling
 
 @bot.event
 async def on_ready():
@@ -20,7 +24,8 @@ async def on_message(ctx):
     ctx.content = ctx.content.lower()
     await bot.process_commands(ctx)
 
-#example of checking for argument being passed.
+#Kingdom management
+
 @bot.command()
 async def createkingdom(ctx, name = None):
     ownerid = ctx.author.id
@@ -51,6 +56,8 @@ async def deletekingdom(ctx, name = None):
     else:
         await ctx.send('Please provide a kingdom to delete!')
 
+#Gold top
+
 @bot.command()
 async def goldtop(ctx):
     teams = dbmanager.goldTopName()
@@ -61,6 +68,8 @@ async def goldtop(ctx):
         embed.add_field(name="{}. {}".format(i + 1, teams[i]), value=gold[i], inline=False)
         i += 1
     await ctx.send(embed=embed)
+
+#Mining
 
 @bot.command()
 @commands.cooldown(1, 30, commands.BucketType.user)
@@ -74,6 +83,8 @@ async def mine(ctx):
         await ctx.send('Your miners found {} pieces of gold!'.format(gold))
     else:
         await ctx.send('You must own a kingdom before you can go mining!')
+
+#Raid system
 
 @bot.command()
 @commands.cooldown(1, 90, commands.BucketType.user)
@@ -89,6 +100,38 @@ async def raid(ctx, clantoraid = None):
             await ctx.send('It appears the kingdom you are trying to raid does not exist!')
     else:
         await ctx.send('Please supply a kingdom you wish to raid!')
+
+#Allying System
+
+@bot.command()
+async def requests(ctx):
+    id = ctx.author.id
+    if dbmanager.checkOwner(id):
+        request = ally.isRequested(id)
+        if not request:
+            await ctx.send("No requests")
+        else:
+            await ctx.send(request)
+    else:
+        await ctx.send('You must own a kingdom before you can perform this action!')
+
+@bot.command()
+async def unally(ctx, clanname = None):
+    id = ctx.author.id
+    if clanname:
+        if dbmanager.checkOwner(id):
+            if dbmanager.checkExist(clanname):
+                if ally.checkAlly(id, clanname):
+                    await ctx.send(ally.removeAlly(id, clanname))
+                else:
+                    await ctx.send('You must be allied with {} to unally them!'.format(clanname))
+            else:
+                await ctx.send('It appears the clan you wish to unally does not exist!')
+        else:
+            await ctx.send('You must own a kingdom before performing this action!')
+    else:
+        await ctx.send('Provide a clan to unally!')
+
 #stop command
 @bot.command()
 async def stop(ctx):
