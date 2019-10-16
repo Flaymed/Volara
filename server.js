@@ -9,5 +9,9 @@ app.get('/', function(req, res) {
   res.sendFile(__dirname + '/public/index.html');
 })
 
+app.get('/js/homepage.js', function(req, res) {
+  res.sendFile(__dirname + '/public/js/homepage.js')
+})
+
 app.listen(8000);
 console.log('Server is active on port 8000')
