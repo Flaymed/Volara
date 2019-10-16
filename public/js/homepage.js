@@ -7,7 +7,8 @@ function postData(data, request) {
           break;
 
         case 'topten':
-          $('#topten').append(`html code to send`)
+          $('#topten').append(`html code to send`);
+          break;
       }
     });
   });
