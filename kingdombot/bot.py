@@ -108,6 +108,26 @@ async def raid(ctx, clantoraid = None):
 #Allying System
 
 @bot.command()
+async def ally(ctx, a = None):
+    id = ctx.author.id
+    if a:
+        if dbmanager.checkExist(a):
+            if dbmanager.checkOwner(id):
+                if ally.hasRequest(a):
+                    if ally.addAlly(id, a):
+                        await ctx.send('Alliance request sent, tell the clan {} to accept your request!'.format(a))
+                    else:
+                        await ctx.send('So uh, something went wrong, please contact Flaymed immediatly.')
+                else:
+                    await ctx.send('Tell this clan to clear their requests before you request an alliance again!')
+            else:
+                await ctx.send('You must own a clan to ally another clan.')
+        else:
+            await ctx.send('The clan you wish to ally does not exist.')
+    else:
+        await ctx.send('Please specify a clan to ally.')
+
+@bot.command()
 async def requests(ctx):
     id = ctx.author.id
     if dbmanager.checkOwner(id):
@@ -135,6 +155,8 @@ async def unally(ctx, clanname = None):
             await ctx.send('You must own a kingdom before performing this action!')
     else:
         await ctx.send('Provide a clan to unally!')
+
+bot.remove_command('help')
 
 #stop command
 @bot.command()

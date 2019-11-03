@@ -14,10 +14,19 @@ def isRequested(id):
     oid = (id,)
     c.execute("SELECT request FROM kingdoms WHERE ownerid=?", oid)
     results = c.fetchone()
-    if results[0] == None:
+    if results == None:
         return False
     else:
         return results[0]
+
+def hasRequest(name):
+    clanname = (name,)
+    c.execute("SELECT request FROM kingdoms WHERE name=?", clanname)
+    results = c.fetchone()
+    if results == None:
+        return False
+    else:
+        return True
 
 def hasAlly(clanname):
     name = (clanname,)

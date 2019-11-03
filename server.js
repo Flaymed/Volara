@@ -9,6 +9,10 @@ app.get('/', function(req, res) {
   res.sendFile(__dirname + '/public/index.html');
 })
 
+app.get('/images/Tower.png', function(req, res) {
+  res.sendFile(__dirname + '/public/images/Tower.png')
+})
+
 app.get('/js/homepage.js', function(req, res) {
   res.sendFile(__dirname + '/public/js/homepage.js')
 })
